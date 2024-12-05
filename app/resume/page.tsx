@@ -1,12 +1,12 @@
 "use client"
-import { Button } from "antd";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { TemplateDemo, Template1 } from "../components/templates/template1";
-import { useEffect, useContext, useState } from "react";
+import { TemplateDemo } from "../components/templates/template1";
+import { useEffect, useState } from "react";
 import { getDoc, doc, db } from "../firebase/firebase";
 import Nav2 from "../components/nav2";
 
-export default function resumeApp() {
+function ResumeApp() {
   const param = useSearchParams();
   const p = param.get("id");
 
@@ -37,4 +37,13 @@ export default function resumeApp() {
         </div>
     </Nav2>
   );
+}
+
+
+export default function ShareResumeApp() {
+  return(
+    <Suspense>
+    <ResumeApp></ResumeApp>
+    </Suspense>
+  )
 }

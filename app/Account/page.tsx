@@ -4,17 +4,17 @@ import Nav from "../components/nav";
 import { User, UserData } from "../context/app";
 import { useContext, useEffect, useState } from "react";
 import { Button } from "antd";
-import { TemplateDemo, Template1 } from "../components/templates/template1";
+import { TemplateDemo } from "../components/templates/template1";
 import {
   getDocs,
   query,
   where,
   collection,
   db,
-  doc,
+  auth,
+  signOut
 } from "../firebase/firebase";
 import { Pencil, Download, Trash2 } from "lucide-react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useRouter } from "next/navigation";
 
 export default function MyAccount() {
@@ -26,6 +26,14 @@ export default function MyAccount() {
   const obj = useContext(UserData);
 
   const [userResumes, setUserResumes] = useState<any>();
+
+  function userSignout() {
+    signOut(auth).then(() => {
+      router.push("/")
+    }).catch((error) => {
+      // An error happened.
+    });
+  }
 
   async function getResumes() {
     let arr : any = [];
@@ -57,7 +65,7 @@ export default function MyAccount() {
             <h2 className="text-xl">{user?.user?.email}</h2>
           </div>
           <div>
-            <Button className="btn" type="primary">
+            <Button onClick={() => {userSignout()}} className="btn" type="primary">
               Log out
             </Button>
           </div>
@@ -69,7 +77,7 @@ export default function MyAccount() {
           <div className="resumes my-10 flex justify-center gap-10 flex-wrap">
             {userResumes ? (
               userResumes.map((v: any, i: number) => (
-                <div className="file relative inline-block">
+                <div key={i} className="file relative inline-block">
                   <div className="absolute hidden gap-5 items-center justify-center w-full h-full">
                     <Button onClick={() => {router.push(`/createResume?id=${v.id}`)}} type="primary" className="short-btn">
                       <Pencil></Pencil>

@@ -72,7 +72,7 @@ const LoginModal: React.FC<{buttonText: string | React.JSX.Element, buttonClass:
             </div>
             <div className="btn-section max-w-md my-10 mx-auto flex justify-between items-center">
               <p>
-                Don't have an Account?{" "}
+                Don{`&apos;`}t have an Account?{" "}
                 <span
                   onClick={() => setIsAccount(false)}
                   className="text-blue-500 cursor-pointer"

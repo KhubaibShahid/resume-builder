@@ -2,8 +2,8 @@
 import { Button } from "antd";
 import { useEffect, useState, useLayoutEffect } from "react";
 import { X, Save } from "lucide-react";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
-import { Template1, TemplateDemo } from "../components/templates/template1";
+import { Suspense } from "react";
+import { TemplateDemo } from "../components/templates/template1";
 import ModalButton from "../components/modal";
 import ResumeForm from "../components/form";
 import { User, UserData } from "../context/app";
@@ -22,7 +22,7 @@ import {
 } from "../firebase/firebase";
 import { useSearchParams } from "next/navigation";
 
-export default function ResumeBuild({ template }: any) {
+function ResumeBuild({ template }: any) {
   
   const params = useSearchParams();
   const p = params.get("id");
@@ -167,4 +167,13 @@ export default function ResumeBuild({ template }: any) {
       </div>
     </div>
   );
+}
+
+
+export default function CreateResumeApp() {
+  return (
+    <Suspense>
+      <ResumeBuild></ResumeBuild>
+    </Suspense>
+  )
 }

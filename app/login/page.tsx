@@ -15,7 +15,6 @@ import {
   db
 } from "../firebase/firebase";
 import { redirect } from "next/navigation";
-import Loading from "./loading";
 
 export default function Login() {
   const [isAccount, setIsAccount] = useState(true);
@@ -70,9 +69,20 @@ export default function Login() {
 
     if (emailFlag && passFlag) {
       console.log("login");
+      signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    const user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
     } else {
       console.log("wrong login info");
     }
+
+
   }
 
   function createAccont() {
@@ -204,7 +214,7 @@ export default function Login() {
                 <div className="btn-section max-w-md my-10 mx-auto flex justify-between items-center">
                   <Button onClick={() => {loginAccount()}} className="btn text-lg px-5 py-4">Login</Button>
                   <p>
-                    Don't have an Account?{" "}
+                    Don{`&apos;`}t have an Account?{" "}
                     <span
                       onClick={() => setIsAccount(false)}
                       className="text-blue-500 cursor-pointer"
